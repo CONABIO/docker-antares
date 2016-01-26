@@ -10,21 +10,34 @@
 # Ubuntu 14.04 Trusty Tahyr
 FROM ubuntu:trusty
 
-MAINTAINER Homme Zwaagstra <hrz@geodata.soton.ac.uk>
+MAINTAINER Amaury Gutierrez <amaury.gtz@gmail.com>
 
 # Install the application.
 ADD . /usr/local/src/gdal-docker/
 RUN apt-get update -y && \
-    apt-get install -y make && \
+    apt-get install -y \
+    curl \
+    libblas-dev \
+    liblapack-dev \
+    libatlas-base-dev \
+    gfortran \
+    make  \
+	nano \
+	python-matplotlib \
+	python-skimage \
+	&& \
     make -C /usr/local/src/gdal-docker install clean && \
     apt-get purge -y make
 
-# Externally accessible data is by default put in /data
-WORKDIR /data
-VOLUME ["/data"]
+RUN curl https://bootstrap.pypa.io/get-pip.py -O
+RUN python get-pip.py
 
-# Execute the gdal utilities as nobody, not root
-USER nobody
+COPY requirements.txt /tmp/
+
+RUN pip install -r /tmp/requirements.txt
+
+# Execute the antares container as root
+USER root
 
 # Output version and capabilities by default.
 CMD gdalinfo --version && gdalinfo --formats && ogrinfo --formats
