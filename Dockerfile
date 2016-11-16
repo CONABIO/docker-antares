@@ -21,11 +21,14 @@ RUN apt-get update -y && \
     liblapack-dev \
     libatlas-base-dev \
     gfortran \
+    gridengine-client \
+    gridengine-common \
+    gridengine-exec \
     make  \
-	nano \
-	python-matplotlib \
-	python-skimage \
-	&& \
+    nano \
+    python-matplotlib \
+    python-skimage \
+    && \
     make -C /usr/local/src/gdal-docker install clean && \
     apt-get purge -y make
 
