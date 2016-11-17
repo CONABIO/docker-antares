@@ -28,6 +28,7 @@ RUN apt-get update -y && \
     nano \
     python-matplotlib \
     python-skimage \
+    supervisor \
     && \
     make -C /usr/local/src/gdal-docker install clean && \
     apt-get purge -y make
