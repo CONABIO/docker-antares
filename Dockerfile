@@ -17,18 +17,21 @@ ADD . /usr/local/src/gdal-docker/
 RUN apt-get update -y && \
     apt-get install -y \
     curl \
-    libblas-dev \
-    liblapack-dev \
-    libatlas-base-dev \
+    git \
     gfortran \
     gridengine-client \
     gridengine-common \
     gridengine-exec \
+    htop \
+    libblas-dev \
+    liblapack-dev \
+    libatlas-base-dev \
     make  \
     nano \
     python-matplotlib \
     python-skimage \
     supervisor \
+    wget \
     && \
     make -C /usr/local/src/gdal-docker install clean && \
     apt-get purge -y make
@@ -42,6 +45,18 @@ RUN pip install -r /tmp/requirements.txt
 
 # Execute the antares container as root
 USER root
+
+RUN export MASTER_HOSTNAME=master
+RUN echo "gridengine-common       shared/gridenginemaster string  $MASTER_HOSTNAME" | sudo debconf-set-selections
+RUN echo "gridengine-common       shared/gridenginecell   string  default" | sudo debconf-set-selections
+RUN echo "gridengine-common       shared/gridengineconfig boolean false" | sudo debconf-set-selections
+RUN echo "gridengine-client       shared/gridenginemaster string  $MASTER_HOSTNAME" | sudo debconf-set-selections
+RUN echo "gridengine-client       shared/gridenginecell   string  default" | sudo debconf-set-selections
+RUN echo "gridengine-client       shared/gridengineconfig boolean false" | sudo debconf-set-selections
+RUN echo "postfix postfix/main_mailer_type        select  No configuration" | sudo debconf-set-selections
+RUN service postfix stop
+RUN update-rc.d postfix disable
+RUN service gridengine-exec restart
 
 # Output version and capabilities by default.
 CMD gdalinfo --version && gdalinfo --formats && ogrinfo --formats
