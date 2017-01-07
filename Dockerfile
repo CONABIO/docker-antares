@@ -24,9 +24,11 @@ RUN apt-get update -y && \
     gridengine-exec \
     htop \
     libblas-dev \
+    libeigen3-dev \
     liblapack-dev \
     libatlas-base-dev \
-    make  \
+    libtbb-dev \
+    make \
     nano \
     python-matplotlib \
     python-skimage \
