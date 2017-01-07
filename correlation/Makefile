@@ -7,11 +7,11 @@ LDFLAGS = -lm -fPIC -L/usr/local/lib/ -lgdal -L/usr/lib64 -lstdc++ -ltbb -I/usr/
 
 all: Correlation
 
-Correlation: Correlation.o
+correlation: correlation.o
 	$(CC) -o $@ $^ $(LDFLAGS)
 
-Correlation.o: Correlation.cpp 
+correlation.o: correlation.cpp 
 	$(CC) -c $(CFLAGS) $<
 
 clean:
-	rm *.o Correlation
+	rm *.o correlation
