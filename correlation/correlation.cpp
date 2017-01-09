@@ -35,7 +35,7 @@
  * - x- and y-gaps for defined pixels                    *
 \*********************************************************/
 
-#include "Correlation.h"
+#include "correlation.h"
 
 class Parallelizing
 /*********************************************************\

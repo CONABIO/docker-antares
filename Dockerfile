@@ -38,7 +38,7 @@ RUN apt-get update -y && \
     make -C /usr/local/src/gdal-docker install clean && \
     make -C /usr/local/src/gdal-docker/correlation && \
     apt-get purge -y make
-
+RUN ln -s /usr/local/src/gdal-docker/correlation/correlation /usr/local/bin/correlation
 RUN curl https://bootstrap.pypa.io/get-pip.py -O
 RUN python get-pip.py
 

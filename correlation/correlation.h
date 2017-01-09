@@ -8,8 +8,8 @@
 /*********************************************************\
  * define header file                                    *
 \*********************************************************/
-#ifndef Correlation_h
-#define Correlation_h
+#ifndef correlation_h
+#define correlation_h
 
 /*********************************************************\
  * define variable                                       *
